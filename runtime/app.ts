@@ -197,6 +197,47 @@ this.cropperSettings4.cropOnResize = false;
 </code>
 </pre>
 </tab>
+<tab title="Selectable Outside of the image" [disabled]="false">
+    <div class="row">
+    <div class="col-md-9">
+        <h3>source</h3>
+        <img-cropper #cropper5 [image]="data5" [settings]="cropperSettings5"></img-cropper>
+    </div>
+    <h3>result</h3>
+    <div class="col-md-3">
+        <span *ngIf="data5.image" >
+            <img [src]="data5.image" [width]="200">
+        </span>
+    </div>
+    </div>
+<h3>settings</h3>
+<pre>
+<code>
+        this.cropperSettings5 = new CropperSettings();
+        this.cropperSettings5.width = 200;
+        this.cropperSettings5.height = 200;
+
+        this.cropperSettings5.croppedWidth = 200;
+        this.cropperSettings5.croppedHeight = 200;
+
+        this.cropperSettings5.canvasWidth = 500;
+        this.cropperSettings5.canvasHeight = 300;
+
+        this.cropperSettings5.minWidth = 100;
+        this.cropperSettings5.minHeight = 100;
+
+        this.cropperSettings5.rounded = false;
+
+        this.cropperSettings5.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings5.cropperDrawSettings.strokeWidth = 2;
+
+        this.cropperSettings5.keepAspect = true;
+        this.cropperSettings5.preserveSize = false;
+        this.cropperSettings5.cropOnResize = true;
+        this.cropperSettings5.outsideOfImageSelectable = true;
+</code>
+</pre>
+</tab>
 </tabset>
     `
 })
@@ -222,6 +263,9 @@ export class AppComponent extends Type {
     @ViewChild('cropper4', undefined)
     public cropper4:ImageCropperComponent;
 
+    @ViewChild('cropper5', undefined)
+    public cropper5:ImageCropperComponent;
+
     public onChange:Function;
     public updateCropPosition:Function;
     public resetCroppers:Function;
@@ -232,7 +276,12 @@ export class AppComponent extends Type {
     public cropPosition:CropPosition;
 
     //Cropper 4 data
+    public data4:any;
     public cropperSettings4:CropperSettings;
+
+    //Cropper 5 data
+    public data5:any;
+    public cropperSettings5:CropperSettings;
 
     constructor() {
         super();
@@ -369,6 +418,31 @@ export class AppComponent extends Type {
         this.getImage = () => {
           this.data4.image = this.cropper4.cropper.getCroppedImage(true).src;
         }
+
+        this.cropperSettings5 = new CropperSettings();
+        this.cropperSettings5.width = 200;
+        this.cropperSettings5.height = 200;
+
+        this.cropperSettings5.croppedWidth = 200;
+        this.cropperSettings5.croppedHeight = 200;
+
+        this.cropperSettings5.canvasWidth = 500;
+        this.cropperSettings5.canvasHeight = 300;
+
+        this.cropperSettings5.minWidth = 100;
+        this.cropperSettings5.minHeight = 100;
+
+        this.cropperSettings5.rounded = false;
+
+        this.cropperSettings5.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+        this.cropperSettings5.cropperDrawSettings.strokeWidth = 2;
+
+        this.cropperSettings5.keepAspect = true;
+        this.cropperSettings5.preserveSize = false;
+        this.cropperSettings5.cropOnResize = true;
+        this.cropperSettings5.outsideOfImageSelectable = true;
+
+        this.data5 = {};
 
         this.onChange = ($event:any) => {
             var image:any = new Image();

@@ -56,6 +56,7 @@ export class CropperSettings implements ICropperSettings {
     private _rounded: boolean = false;
     private _keepAspect: boolean = true;
 
+    public outsideOfImageSelectable = false;
 
     constructor() {
         // init

@@ -575,10 +575,18 @@ var ImageCropper = (function (_super) {
             h = this.canvas.height;
             w = this.canvas.height / sourceAspect;
         }
-        this.minXClamp = this.canvas.width / 2 - w / 2;
-        this.minYClamp = this.canvas.height / 2 - h / 2;
-        this.maxXClamp = this.canvas.width / 2 + w / 2;
-        this.maxYClamp = this.canvas.height / 2 + h / 2;
+        if (this.cropperSettings.outsideOfImageSelectable) {
+            this.minXClamp = 0;
+            this.minYClamp = 0;
+            this.maxXClamp = this.canvas.width;
+            this.maxYClamp = this.canvas.height;
+        }
+        else {
+            this.minXClamp = this.canvas.width / 2 - w / 2;
+            this.minYClamp = this.canvas.height / 2 - h / 2;
+            this.maxXClamp = this.canvas.width / 2 + w / 2;
+            this.maxYClamp = this.canvas.height / 2 + h / 2;
+        }
     };
     ImageCropper.prototype.getCropBounds = function () {
         var bounds = this.getBounds();
@@ -768,7 +776,12 @@ var ImageCropper = (function (_super) {
                 this.cropCanvas.height = this.cropHeight;
             }
             ctx.clearRect(0, 0, this.cropCanvas.width, this.cropCanvas.height);
-            this.drawImageIOSFix(ctx, this.srcImage, Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0), Math.max(Math.round(bounds.top / this.ratioH - offsetH), 0), Math.max(Math.round(bounds.width / this.ratioW), 1), Math.max(Math.round(bounds.height / this.ratioH), 1), 0, 0, this.cropCanvas.width, this.cropCanvas.height);
+            if (this.cropperSettings.outsideOfImageSelectable) {
+                this.drawImageIOSFix(ctx, this.srcImage, Math.round((bounds.left) / this.ratioW - offsetW), Math.round(bounds.top / this.ratioH - offsetH), Math.max(Math.round(bounds.width / this.ratioW), 1), Math.max(Math.round(bounds.height / this.ratioH), 1), 0, 0, this.cropCanvas.width, this.cropCanvas.height);
+            }
+            else {
+                this.drawImageIOSFix(ctx, this.srcImage, Math.max(Math.round((bounds.left) / this.ratioW - offsetW), 0), Math.max(Math.round(bounds.top / this.ratioH - offsetH), 0), Math.max(Math.round(bounds.width / this.ratioW), 1), Math.max(Math.round(bounds.height / this.ratioH), 1), 0, 0, this.cropCanvas.width, this.cropCanvas.height);
+            }
             if (this.cropperSettings.resampleFn) {
                 this.cropperSettings.resampleFn(this.cropCanvas);
             }
@@ -976,6 +989,10 @@ var ImageCropper = (function (_super) {
         }
     };
     ImageCropper.prototype.drawImageIOSFix = function (ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
+        if (this.cropperSettings.outsideOfImageSelectable && this.fileType == "image/jpeg") {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        }
         ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
     };
     ImageCropper.prototype.onMouseDown = function (event) {
