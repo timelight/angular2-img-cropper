@@ -20,6 +20,7 @@ var CropperSettings = (function () {
         this.compressRatio = 1.0;
         this._rounded = false;
         this._keepAspect = true;
+        this.outsideOfImageSelectable = false;
         // init
     }
     Object.defineProperty(CropperSettings.prototype, "rounded", {

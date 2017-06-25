@@ -43,6 +43,7 @@ export declare class CropperSettings implements ICropperSettings {
     compressRatio: number;
     private _rounded;
     private _keepAspect;
+    outsideOfImageSelectable: boolean;
     constructor();
     rounded: boolean;
     keepAspect: boolean;
