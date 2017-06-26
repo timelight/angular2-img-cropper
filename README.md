@@ -154,6 +154,8 @@ Checkout this [sample plunker](https://embed.plnkr.co/VFwGvAO6MhV06IDTLk5W/)
 * **resampleFn**: Function(canvas) - function used to resample the cropped image (#136); - see example #3 from runtime sample app
 * **cropOnResize**:*boolean* (default: true) - if true the cropper will create a new cropped Image object immediately when the crop area is resized
 
+* **outsideOfImageSelectable**:*boolean* (default: false) - if true outside of the image can be selected as cropping area.
+
 ## Customizing Image cropper
 
 Replacing component file input:
